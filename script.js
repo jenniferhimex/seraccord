@@ -198,7 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         submitBtn.disabled = true;
       }
 
-      const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbwUsxiEvEjzCFZs19a7Mup67BJsUYDdeayynI0mhzWviSltSVjC24h7h2rTeW4vg_lL/exec';
+      const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbxQJvROaylmNG58DfwEoBSOONc8wR57olLJnW_lc7QiwOJN0pxRE0tsdNnD3VtNEzim/exec';
       const formData = new FormData(consultationForm);
       const urlEncoded = new URLSearchParams();
       for (const pair of formData.entries()) {
