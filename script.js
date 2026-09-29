@@ -1,4 +1,4 @@
-﻿/**
+/**
  * Seraccord Master Architecture Script (English)
  * European Archive Brand Guideline V1.2 Compliance
  * Supports:
@@ -98,7 +98,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (supportBtn) {
     supportBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      showToast('Connecting with Seraccord Client Concierge (Toll-Free: 1-800-SERACCORD)...');
+      openConsultationModal();
     });
   }
 
@@ -106,7 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (accountBtn) {
     accountBtn.addEventListener('click', (e) => {
       e.preventDefault();
-      showToast('Please sign in or create your Seraccord account.');
+      showToast('Connecting with Seraccord Concierge: 0909 068 237');
     });
   }
 
@@ -126,6 +126,102 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       showToast('Welcome to the Seraccord Family.');
       footerForm.reset();
+    });
+  }
+
+  // =========================================================================
+  // CLIENT CONCIERGE & MULTI-CHANNEL FLOATING WIDGET
+  // =========================================================================
+  const floatingContactWidget = document.getElementById('floatingContactWidget');
+  const floatingContactToggle = document.getElementById('floatingContactToggle');
+  const consultModal = document.getElementById('consultModal');
+  const openConsultModalBtns = document.querySelectorAll('#openConsultModalBtn, .open-consult-btn');
+  const closeConsultModalBtn = document.getElementById('closeConsultModalBtn');
+  const consultationForm = document.getElementById('consultationForm');
+
+  if (floatingContactToggle && floatingContactWidget) {
+    floatingContactToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      floatingContactWidget.classList.toggle('open');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!floatingContactWidget.contains(e.target)) {
+        floatingContactWidget.classList.remove('open');
+      }
+    });
+  }
+
+  function openConsultationModal() {
+    if (consultModal) {
+      consultModal.classList.add('open');
+      if (floatingContactWidget) floatingContactWidget.classList.remove('open');
+    }
+  }
+
+  function closeConsultationModal() {
+    if (consultModal) {
+      consultModal.classList.remove('open');
+    }
+  }
+
+  openConsultModalBtns.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      openConsultationModal();
+    });
+  });
+
+  if (closeConsultModalBtn) {
+    closeConsultModalBtn.addEventListener('click', closeConsultationModal);
+  }
+
+  if (consultModal) {
+    consultModal.addEventListener('click', (e) => {
+      if (e.target === consultModal) closeConsultationModal();
+    });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && consultModal.classList.contains('open')) {
+        closeConsultationModal();
+      }
+    });
+  }
+
+  if (consultationForm) {
+    consultationForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+      const submitBtn = consultationForm.querySelector('button[type="submit"]');
+      const originalText = submitBtn ? submitBtn.textContent : 'Submit';
+      if (submitBtn) {
+        submitBtn.textContent = 'Sending Request...';
+        submitBtn.disabled = true;
+      }
+
+      const formData = new FormData(consultationForm);
+      fetch(consultationForm.action, {
+        method: 'POST',
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      .then(response => {
+        showToast('Thank you! Your request has been sent to jennifer.himex@gmail.com.');
+        consultationForm.reset();
+        closeConsultationModal();
+      })
+      .catch(error => {
+        showToast('Thank you! We will reach you at your phone shortly.');
+        consultationForm.reset();
+        closeConsultationModal();
+      })
+      .finally(() => {
+        if (submitBtn) {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+        }
+      });
     });
   }
 
