@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 52" fill="none" role="img" aria-label="FurniAssure Light Logo">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Manrope:wght@800&amp;display=swap');
+      .logo-text-light {
+        font-family: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        font-weight: 800;
+        font-size: 26px;
+        letter-spacing: -0.04em;
+        fill: #F4EFE7;
+      }
+    </style>
+  </defs>
+  <!-- Portal Mark Icon -->
+  <g transform="translate(0, 2) scale(0.04)">
+    <path d="M255 960V505C255 275 393 145 600 145C807 145 945 275 945 505V960" fill="none" stroke="#F4EFE7" stroke-width="86" stroke-linecap="square" stroke-linejoin="miter"/>
+    <path d="M425 960V540C425 420 500 350 600 350C700 350 775 420 775 540V960" fill="none" stroke="#F4EFE7" stroke-width="34" stroke-linecap="square"/>
+    <path d="M600 145C807 145 945 275 945 505V960" fill="none" stroke="#8B4F3A" stroke-width="26" stroke-linecap="square"/>
+    <path d="M600 350C700 350 775 420 775 540V960" fill="none" stroke="#A89B8A" stroke-width="18" stroke-linecap="square"/>
+    <rect x="197" y="960" width="806" height="48" fill="#F4EFE7"/>
+  </g>
+  <!-- Wordmark in Manrope 800 -->
+  <text x="56" y="34" class="logo-text-light">FurniAssure</text>
+</svg>
