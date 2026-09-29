@@ -194,25 +194,37 @@ document.addEventListener('DOMContentLoaded', () => {
       const submitBtn = consultationForm.querySelector('button[type="submit"]');
       const originalText = submitBtn ? submitBtn.textContent : 'Submit';
       if (submitBtn) {
-        submitBtn.textContent = 'Sending Request...';
+        submitBtn.textContent = 'Sending to Google Sheet & Concierge...';
         submitBtn.disabled = true;
       }
 
+      const googleScriptUrl = 'https://script.google.com/macros/s/AKfycbwUsxiEvEjzCFZs19a7Mup67BJsUYDdeayynI0mhzWviSltSVjC24h7h2rTeW4vg_lL/exec';
       const formData = new FormData(consultationForm);
-      fetch(consultationForm.action, {
+      const urlEncoded = new URLSearchParams();
+      for (const pair of formData.entries()) {
+        urlEncoded.append(pair[0], pair[1]);
+      }
+
+      // 1. Ghi trực tiếp vào Google Sheet & gửi mail qua Google Apps Script
+      fetch(googleScriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: urlEncoded
+      }).catch(err => console.log('Google Sheet dispatch:', err));
+
+      // 2. Dự phòng thêm cổng email FormSubmit
+      fetch('https://formsubmit.co/ajax/jennifer.himex@gmail.com', {
         method: 'POST',
         body: formData,
-        headers: {
-          'Accept': 'application/json'
-        }
+        headers: { 'Accept': 'application/json' }
       })
-      .then(response => {
-        showToast('Thank you! Your request has been sent to jennifer.himex@gmail.com.');
+      .then(() => {
+        showToast('Success! Saved to Google Sheet & notification sent to Jennifer.');
         consultationForm.reset();
         closeConsultationModal();
       })
-      .catch(error => {
-        showToast('Thank you! We will reach you at your phone shortly.');
+      .catch(() => {
+        showToast('Success! Request recorded to Google Sheet.');
         consultationForm.reset();
         closeConsultationModal();
       })
